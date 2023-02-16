@@ -23,37 +23,6 @@ new Trigger({
 }).listen();
 ```
 
-## ✍️ Customize
-
-You can easily adapt this workflow to a different event relevant to your app. For example, we have a workflow that runs when a user is created and it looks like this:
-
-```ts
-import { Trigger, customEvent } from "@trigger.dev/sdk";
-import * as slack from "@trigger.dev/slack";
-import { z } from "zod";
-
-new Trigger({
-  id: "new-user",
-  name: "New user",
-  on: customEvent({
-    name: "user.created",
-    schema: z.object({ id: z.string() }),
-  }),
-  async run(event, ctx) {
-    const user = await prisma.user.find({
-      where: { id: event.id },
-    });
-
-    await slack.postMessage("🚨", {
-      channelName: "new-users",
-      text: `New user signed up: ${user.email}`,
-    });
-  },
-}).listen();
-```
-
-Be sure to check out more over on our [docs](https://docs.trigger.dev)
-
 ## 🚀 Deploy
 
 We've made it really easy to deploy this repo to Render.com, if you don't already have a Node.js server to host your triggers.
@@ -139,3 +108,34 @@ const response = await fetch("https://app.trigger.dev/api/v1/events", {
   }),
 });
 ```
+
+## ✍️ Customize
+
+You can easily adapt this workflow to a different event relevant to your app. For example, we have a workflow that runs when a user is created and it looks like this:
+
+```ts
+import { Trigger, customEvent } from "@trigger.dev/sdk";
+import * as slack from "@trigger.dev/slack";
+import { z } from "zod";
+
+new Trigger({
+  id: "new-user",
+  name: "New user",
+  on: customEvent({
+    name: "user.created",
+    schema: z.object({ id: z.string() }),
+  }),
+  async run(event, ctx) {
+    const user = await prisma.user.find({
+      where: { id: event.id },
+    });
+
+    await slack.postMessage("🚨", {
+      channelName: "new-users",
+      text: `New user signed up: ${user.email}`,
+    });
+  },
+}).listen();
+```
+
+Be sure to check out more over on our [docs](https://docs.trigger.dev)
