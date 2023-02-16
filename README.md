@@ -45,7 +45,7 @@ cd basic-starter
 npm install
 ```
 
-Then create a `.env` file with your development Trigger.dev API Key:
+Then create a `.env` file and make sure to enter your Trigger.dev development API Key:
 
 ```sh
 echo "TRIGGER_API_KEY=<APIKEY>" >> .env
